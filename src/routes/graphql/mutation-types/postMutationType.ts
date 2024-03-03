@@ -10,7 +10,7 @@ export interface CreatePostType {
 }
 
 export const CreatePostDTOType = new GraphQLInputObjectType({
-  name: 'CreatePostType',
+  name: 'CreatePostDTOType',
   fields: () => ({
     title: { type: new GraphQLNonNull(GraphQLString) },
     content: { type: new GraphQLNonNull(GraphQLString) },
