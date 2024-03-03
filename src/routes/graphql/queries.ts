@@ -1,9 +1,8 @@
-import { PrismaClient } from '@prisma/client';
-
+import prismaClient from './types/context.js';
 import { GraphQLList, GraphQLNonNull, GraphQLObjectType } from 'graphql';
-import { Member, MemberType, MemberTypeId } from './types/memberType.js';
-// import { UUIDType } from './types/uuid.js';
-const prismaClient = new PrismaClient();
+import { MemberType, MemberTypeId } from './types/memberType.js';
+import { MemberType as MemberTypeFromPrisma, PrismaClient  } from '@prisma/client';
+
 
 export const RootQuery = new GraphQLObjectType<unknown, PrismaClient>({
   name: 'RootQueryType',
@@ -13,7 +12,7 @@ export const RootQuery = new GraphQLObjectType<unknown, PrismaClient>({
       args: {
         id: { type: new GraphQLNonNull(MemberTypeId) },
       },
-      resolve: async (_, { id }: Member) =>
+      resolve: async (_, { id }: MemberTypeFromPrisma) =>
         await prismaClient.memberType.findUnique({
           where: { id },
         }),
