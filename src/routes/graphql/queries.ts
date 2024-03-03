@@ -14,7 +14,7 @@ import { ProfileType } from './types/profileType.js';
 import { UserType } from './types/userType.js';
 
 export const RootQuery = new GraphQLObjectType<unknown, PrismaClient>({
-  name: 'RootQueryType',
+  name: 'RootQuery',
   fields: {
     memberType: {
       type: MemberType,

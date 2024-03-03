@@ -2,6 +2,7 @@ import {
   GraphQLEnumType,
   GraphQLFloat,
   GraphQLInt,
+  GraphQLList,
   GraphQLNonNull,
   GraphQLObjectType,
 } from 'graphql';
@@ -26,7 +27,7 @@ export const MemberType = new GraphQLObjectType({
     discount: { type: GraphQLFloat },
     postsLimitPerMonth: { type: GraphQLInt },
     profiles: {
-      type: ProfilesType,
+      type: ProfilesType as GraphQLList<GraphQLObjectType>,
       resolve: async ({ id }: MemberTypeFromPrisma ) => {
         await prismaClient.profile.findMany({ where: { memberTypeId: id } });
       },
