@@ -6,13 +6,13 @@ import { UUIDType } from "./uuid.js";
 
 export type Profile = {
   id: string;
-  isMale: boolean,
-  yearOfBirth: number,
-  userId: string,
-  memberTypeId: MemberTypeIdFromSchema | string,
+  isMale: boolean;
+  yearOfBirth: number;
+  userId: string;
+  memberTypeId: MemberTypeIdFromSchema | string;
 };
 
-export const ProfileFields = {
+const ProfileFields = {
   id: {type: new GraphQLNonNull(UUIDType)},
   isMale: {type: GraphQLBoolean},
   yearOfBirth: {type: GraphQLInt},
