@@ -4,6 +4,7 @@ import { graphql, parse, validate } from 'graphql';
 import depthLimit from 'graphql-depth-limit';
 
 const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
+  const { prisma } = fastify;
   fastify.route({
     url: '/',
     method: 'POST',
@@ -15,16 +16,21 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
     },
     async handler(req) {
       const { query, variables } = req.body;
-      const errors = validate(schemaql, parse(query), [depthLimit(5)]);
+      const errorsVal = validate(schemaql, parse(query), [depthLimit(5)]);
 
-      if (errors.length) {
-        return { errors };
+      if (errorsVal.length) {
+        return { errors: errorsVal };
       }
-      return await graphql({
+
+      const { data, errors } = await graphql({
         schema: schemaql,
         source: query,
         variableValues: variables,
+        contextValue: {
+          prisma
+        }
       });
+      return { data, errors };
     },
   });
 };
