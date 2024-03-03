@@ -20,7 +20,7 @@ export const ProfileType = new GraphQLObjectType({
     userId: { type: new GraphQLNonNull(UUIDType) },
     memberTypeId: { type: new GraphQLNonNull(MemberTypeId) },
     user: {
-      type: UserType,
+      type: UserType as GraphQLObjectType,
       resolve: async ({ userId }: ProfileTypeFromPrisma, __: unknown) =>
         await prismaClient.user.findUnique({ where: { id: userId } }),
     },
