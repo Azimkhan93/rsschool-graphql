@@ -16,7 +16,7 @@ const PostFields = {
 };
 
 export const PostType = new GraphQLObjectType({
-  name: 'ProfileType',
+  name: 'PostType',
   fields: PostFields,
 });
 
