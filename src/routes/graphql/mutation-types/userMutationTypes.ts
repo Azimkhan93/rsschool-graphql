@@ -8,16 +8,14 @@ import { UUIDType } from '../types/uuid.js';
 
 export interface CreateUserType {
   dto: {
-    id: string;
     name: string;
     balance: number;
   };
 }
 
 export const CreateUserDTOType = new GraphQLInputObjectType({
-  name: 'CreateUserDTOType',
+  name: 'CreateUserInput',
   fields: () => ({
-    id: { type: new GraphQLNonNull(UUIDType) },
     name: { type: new GraphQLNonNull(GraphQLString) },
     balance: { type: new GraphQLNonNull(GraphQLFloat) },
   }),
@@ -33,11 +31,11 @@ export interface ChangeUserType {
 }
 
 export const ChangeUserDTOType = new GraphQLInputObjectType({
-  name: 'ChangeUserDTOType',
+  name: 'ChangeUserInput',
   fields: () => ({
-    id: { type: new GraphQLNonNull(UUIDType) },
-    name: { type: new GraphQLNonNull(GraphQLString) },
-    balance: { type: new GraphQLNonNull(GraphQLFloat) },
+    id: { type: UUIDType },
+    name: { type: GraphQLString },
+    balance: { type: GraphQLFloat },
   }),
 });
 

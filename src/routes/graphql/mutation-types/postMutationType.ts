@@ -9,8 +9,8 @@ export interface CreatePostType {
   };
 }
 
-export const CreatePostDTOType = new GraphQLInputObjectType({
-  name: 'CreatePostDTOType',
+export const CreatePostInput = new GraphQLInputObjectType({
+  name: 'CreatePostInput',
   fields: () => ({
     title: { type: new GraphQLNonNull(GraphQLString) },
     content: { type: new GraphQLNonNull(GraphQLString) },
@@ -29,10 +29,10 @@ export interface ChangePostType {
 };
 
 export const ChangePostDTOType = new GraphQLInputObjectType({
-  name: 'ChangePostDTOType',
+  name: 'ChangePostInput',
   fields: () => ({
-    title: { type: new GraphQLNonNull(GraphQLString) },
-    content: { type: new GraphQLNonNull(GraphQLString) },
-    authorId: { type: new GraphQLNonNull(UUIDType) },
+    title: { type: GraphQLString },
+    content: { type: GraphQLString },
+    authorId: { type: UUIDType },
   }),
 });

@@ -30,6 +30,7 @@ const plugin: FastifyPluginAsyncTypebox = async (fastify) => {
           prisma
         }
       });
+      
       return { data, errors };
     },
   });

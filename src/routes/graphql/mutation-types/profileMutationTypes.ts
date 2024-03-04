@@ -18,7 +18,7 @@ export interface CreateProfileType {
 }
 
 export const CreateProfileDTOType = new GraphQLInputObjectType({
-  name: 'CreateProfileDTOType',
+  name: 'CreateProfileInput',
   fields: () => ({
     isMale: { type: new GraphQLNonNull(GraphQLBoolean) },
     yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
@@ -34,17 +34,15 @@ export interface ChangeProfileType {
     isMale: boolean;
     yearOfBirth: number;
     memberTypeId: MemberTypeIdFromSchema;
-    userId: string;
   };
 };
 
 
 export const ChangeProfileDTOType = new GraphQLInputObjectType({
-  name: 'ChangeProfileDTOType',
+  name: 'ChangeProfileInput',
   fields: () => ({
-    isMale: { type: new GraphQLNonNull(GraphQLBoolean) },
-    yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
-    memberTypeId: { type: new GraphQLNonNull(MemberTypeId) },
-    userId: { type: new GraphQLNonNull(UUIDType) },
+    isMale: { type: GraphQLBoolean },
+    yearOfBirth: { type: GraphQLInt },
+    memberTypeId: { type: MemberTypeId },
   }),
 });
