@@ -40,3 +40,9 @@ export const ChangeUserDTOType = new GraphQLInputObjectType({
     balance: { type: new GraphQLNonNull(GraphQLFloat) },
   }),
 });
+
+
+export interface SubscribedToUserType {
+  userId: string; 
+  authorId: string; 
+}
