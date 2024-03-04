@@ -9,6 +9,8 @@ import prismaClient from './types/context.js';
 import { UUIDType } from './types/uuid.js';
 import { ProfileType } from './types/profileType.js';
 import { CreateProfileDTOType, CreateProfileType } from './mutation-types/profileMutationTypes.js';
+import { UserType } from './types/userType.js';
+import { CreateUserDTOType, CreateUserType } from './mutation-types/userMutationTypes.js';
 
 export const RootMutation = new GraphQLObjectType({
   name: 'RootMutation',
@@ -46,6 +48,15 @@ export const RootMutation = new GraphQLObjectType({
       args: { dto: { type: CreateProfileDTOType } },
       resolve: async (_: unknown, { dto }: CreateProfileType) =>
         await prismaClient.profile.create({
+          data: dto,
+        }),
+    },
+
+    createUser: {
+      type: UserType as GraphQLObjectType,
+      args: { dto: { type: CreateUserDTOType } },
+      resolve: async (_: unknown, { dto }: CreateUserType) =>
+        await prismaClient.user.create({
           data: dto,
         }),
     },

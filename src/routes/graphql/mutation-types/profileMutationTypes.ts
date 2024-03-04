@@ -1,9 +1,12 @@
-import { GraphQLBoolean, GraphQLInputObjectType, GraphQLInt, GraphQLNonNull } from "graphql";
-import { MemberTypeId as MemberTypeIdFromSchema } from "../../member-types/schemas.js";
-import { MemberTypeId } from "../types/memberType.js";
-import { UUIDType } from "../types/uuid.js";
-
-
+import {
+  GraphQLBoolean,
+  GraphQLInputObjectType,
+  GraphQLInt,
+  GraphQLNonNull,
+} from 'graphql';
+import { MemberTypeId as MemberTypeIdFromSchema } from '../../member-types/schemas.js';
+import { MemberTypeId } from '../types/memberType.js';
+import { UUIDType } from '../types/uuid.js';
 
 export interface CreateProfileType {
   dto: {
@@ -14,13 +17,12 @@ export interface CreateProfileType {
   };
 }
 
-
 export const CreateProfileDTOType = new GraphQLInputObjectType({
   name: 'CreateProfileDTOType',
   fields: () => ({
-    isMale: { type: new GraphQLNonNull(GraphQLBoolean)},
-    yearOfBirth: { type: new GraphQLNonNull(GraphQLInt)},
-    memberTypeId: { type: new GraphQLNonNull(MemberTypeId)},
-    userId: { type: new GraphQLNonNull(UUIDType)}
+    isMale: { type: new GraphQLNonNull(GraphQLBoolean) },
+    yearOfBirth: { type: new GraphQLNonNull(GraphQLInt) },
+    memberTypeId: { type: new GraphQLNonNull(MemberTypeId) },
+    userId: { type: new GraphQLNonNull(UUIDType) },
   }),
 });
