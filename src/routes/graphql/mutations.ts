@@ -8,7 +8,10 @@ import {
 import prismaClient from './types/context.js';
 import { UUIDType } from './types/uuid.js';
 import { ProfileType } from './types/profileType.js';
-import { CreateProfileDTOType, CreateProfileType } from './mutation-types/profileMutationTypes.js';
+import {
+  CreateProfileDTOType,
+  CreateProfileType,
+} from './mutation-types/profileMutationTypes.js';
 import { UserType } from './types/userType.js';
 import { CreateUserDTOType, CreateUserType } from './mutation-types/userMutationTypes.js';
 
@@ -39,10 +42,16 @@ export const RootMutation = new GraphQLObjectType({
       args: {
         id: { type: new GraphQLNonNull(UUIDType) },
       },
-      resolve: async (_: unknown, id: string) =>
-        await prismaClient.post.delete({ where: { id } }),
+      resolve: async (_: unknown, id: string) => {
+        try {
+          await prismaClient.post.delete({ where: { id } });
+        } catch (err) {
+          return false;
+        }
+        return true
+      },
     },
-    
+
     createProfile: {
       type: ProfileType as GraphQLObjectType,
       args: { dto: { type: CreateProfileDTOType } },
@@ -52,6 +61,22 @@ export const RootMutation = new GraphQLObjectType({
         }),
     },
 
+    deleteProfile: {
+      type: GraphQLBoolean,
+      args: {
+        id: { type: new GraphQLNonNull(UUIDType) },
+      },
+      resolve: async (_: unknown, id: string) =>
+      {
+        try {
+          await prismaClient.profile.delete({ where: { id } });
+        } catch (err) {
+          return false;
+        }
+        return true
+      },
+    },
+
     createUser: {
       type: UserType as GraphQLObjectType,
       args: { dto: { type: CreateUserDTOType } },
@@ -59,6 +84,22 @@ export const RootMutation = new GraphQLObjectType({
         await prismaClient.user.create({
           data: dto,
         }),
+    },
+
+    deleteUser: {
+      type: GraphQLBoolean,
+      args: {
+        id: { type: new GraphQLNonNull(UUIDType) },
+      },
+      resolve: async (_: unknown, id: string) =>
+      {
+        try {
+          await prismaClient.user.delete({ where: { id } });
+        } catch (err) {
+          return false;
+        }
+        return true
+      },
     },
   }),
 });
