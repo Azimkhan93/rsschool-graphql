@@ -1,6 +1,7 @@
 import { GraphQLBoolean, GraphQLNonNull, GraphQLObjectType } from 'graphql';
 import { PostType } from './types/postType.js';
 import {
+  ChangePostDTOType,
   ChangePostType,
   CreatePostDTOType,
   CreatePostType,
@@ -9,11 +10,13 @@ import prismaClient from './types/context.js';
 import { UUIDType } from './types/uuid.js';
 import { ProfileType } from './types/profileType.js';
 import {
+  ChangeProfileDTOType,
+  ChangeProfileType,
   CreateProfileDTOType,
   CreateProfileType,
 } from './mutation-types/profileMutationTypes.js';
 import { UserType } from './types/userType.js';
-import { CreateUserDTOType, CreateUserType } from './mutation-types/userMutationTypes.js';
+import { ChangeUserDTOType, ChangeUserType, CreateUserDTOType, CreateUserType } from './mutation-types/userMutationTypes.js';
 
 export const RootMutation = new GraphQLObjectType({
   name: 'RootMutation',
@@ -31,7 +34,7 @@ export const RootMutation = new GraphQLObjectType({
       type: PostType,
       args: {
         id: { type: new GraphQLNonNull(UUIDType) },
-        dto: { type: CreatePostDTOType },
+        dto: { type: ChangePostDTOType },
       },
       resolve: async (_: unknown, { id, dto }: ChangePostType) =>
         await prismaClient.post.update({ where: { id }, data: dto }),
@@ -61,6 +64,17 @@ export const RootMutation = new GraphQLObjectType({
         }),
     },
 
+    changeProfile: {
+      type: ProfileType as GraphQLObjectType,
+      args: {
+        id: { type: new GraphQLNonNull(UUIDType) },
+        dto: { type: ChangeProfileDTOType },
+      },
+      resolve: async (_: unknown, { id, dto }: ChangeProfileType) =>
+        await prismaClient.profile.update({ where: { id }, data: dto }),
+    },
+
+
     deleteProfile: {
       type: GraphQLBoolean,
       args: {
@@ -84,6 +98,16 @@ export const RootMutation = new GraphQLObjectType({
         await prismaClient.user.create({
           data: dto,
         }),
+    },
+
+    changeUser: {
+      type: UserType as GraphQLObjectType,
+      args: {
+        id: { type: new GraphQLNonNull(UUIDType) },
+        dto: { type: ChangeUserDTOType },
+      },
+      resolve: async (_: unknown, { id, dto }: ChangeUserType) =>
+        await prismaClient.user.update({ where: { id }, data: dto }),
     },
 
     deleteUser: {

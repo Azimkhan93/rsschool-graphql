@@ -29,7 +29,7 @@ export interface ChangePostType {
 };
 
 export const ChangePostDTOType = new GraphQLInputObjectType({
-  name: 'ChangePostType',
+  name: 'ChangePostDTOType',
   fields: () => ({
     title: { type: new GraphQLNonNull(GraphQLString) },
     content: { type: new GraphQLNonNull(GraphQLString) },
