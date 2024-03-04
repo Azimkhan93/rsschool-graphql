@@ -170,7 +170,6 @@ await test('gql-mutations', async (t) => {
         },
       },
     });
-    console.log('last test', errors)
     t.ok(errors.length === 1);
     const message = errors[0].message as string;
     t.ok(
