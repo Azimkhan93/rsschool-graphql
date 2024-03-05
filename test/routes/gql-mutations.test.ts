@@ -45,11 +45,11 @@ await test('gql-mutations', async (t) => {
         profileDto: genCreateProfileDto(user1.id, MemberTypeId.BUSINESS),
       },
     });
-
+    
+    
     const { body: foundCreatedPost } = await getPost(app, data.createPost.id);
     const { body: foundCreatedUser } = await getUser(app, data.createUser.id);
     const { body: foundCreatedProfile } = await getProfile(app, data.createProfile.id);
-
     t.ok(!errors);
     t.ok(foundCreatedPost);
     t.ok(foundCreatedUser);
@@ -72,17 +72,16 @@ await test('gql-mutations', async (t) => {
         },
       },
     });
-
     t.ok(errors.length === 1);
     const message = errors[0].message as string;
     t.ok(message.includes(`Int cannot represent non-integer value: 123.321`));
   });
-
+  
   await t.test('Delete resources by id.', async (t) => {
     const { body: user1 } = await createUser(app);
     const { body: post1 } = await createPost(app, user1.id);
     const { body: profile1 } = await createProfile(app, user1.id, MemberTypeId.BUSINESS);
-
+    
     const {
       body: { errors },
     } = await gqlQuery(app, {
@@ -91,18 +90,19 @@ await test('gql-mutations', async (t) => {
         deletePost(id: $postId)
         deleteProfile(id: $profileId)
         deleteUser(id: $userId)
-    }`,
+      }`,
       variables: {
         postId: post1.id,
         profileId: profile1.id,
         userId: user1.id,
       },
     });
-
+    
     const { body: foundDeletedPost } = await getPost(app, post1.id);
     const { body: foundCreatedUser } = await getUser(app, user1.id);
     const { body: foundCreatedProfile } = await getProfile(app, profile1.id);
-
+    
+    
     t.ok(!errors);
     t.ok(foundDeletedPost === null);
     t.ok(foundCreatedUser === null);
@@ -143,7 +143,7 @@ await test('gql-mutations', async (t) => {
         userDto: { name: changedName },
       },
     });
-
+    
     const { body: foundChangedPost } = await getPost(app, data.changePost.id);
     const { body: foundChangedUser } = await getUser(app, data.changeUser.id);
     const { body: foundChangedProfile } = await getProfile(app, data.changeProfile.id);
@@ -170,7 +170,6 @@ await test('gql-mutations', async (t) => {
         },
       },
     });
-
     t.ok(errors.length === 1);
     const message = errors[0].message as string;
     t.ok(
